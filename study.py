@@ -9,3 +9,12 @@ app=Flask(__name__)
 def hello_world():
    return 'Hello World'
 #给出函数的名称用于生成特定的URL，并返回输出
+
+@app.route('/')
+def index():
+    return 'Index Page'
+
+@app.route('/hello')
+def hello():
+    return 'Hello World'
+#如 index()和hello()函数所示：route()装饰器用于绑定URL
