@@ -44,3 +44,22 @@ def about():
    添加'/'-->('/baout/')将会导致URL错误：404 NOT FOUND
 3. 这允许相似得到URL可以工作甚至'/'。URL应该保持独特，避免重复访问相同的地址
 '''
+
+'''
+url_for('index')--函数可以生成URL
+'''
+
+from flask import request
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method =='POST':
+        do_the_login()
+    else:
+        show_the_login_form()
+'''
+#默认：路由route 只回应 GET,
+# 但是在route中提供methods=['GET','POST']来改变生成器route的回应
+GET :浏览器将当前页面的信息储存并发送给服务端
+POST:浏览器告诉服务端，它要向URL发送最新的信息。
+     服务端(server)必须确认该信息已经储存，并只储存一次
+'''
