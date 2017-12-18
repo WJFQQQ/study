@@ -40,7 +40,7 @@ def about():
 '''
 上述两个函数的不同在于 app.route()末尾有没有斜杠('/')
 1. project函数中，'/project/'类似于系统文件路径，URL定位于尾部的斜杠
-2. about函数中，'/anout'定义了URL，但是没有斜杠.是UNIX-like systems的文件路径。
+2. about函数中，'/about'定义了URL，但是没有斜杠.是UNIX-like systems的文件路径。
    添加'/'-->('/baout/')将会导致URL错误：404 NOT FOUND
 3. 这允许相似得到URL可以工作甚至'/'。URL应该保持独特，避免重复访问相同的地址
 '''
@@ -84,4 +84,30 @@ case2:
     /templates
         /hello.html
 
+'''
+
+from flask import request
+@app.route('/login',methods=['POST','GET'])
+def login():
+    error=None
+    if request.metthod=='POST':
+        if valid_login(request.form['username'],
+                       request.form['userpassword']):
+            return log_the_user_in(request.form['username'])
+        else:
+            error='invalid username/password'
+    return render_template('login.html',error=error)
+searchword= request.arg.get('key','')
+'''
+使用methods的属性来访问请求的方法
+为了访问数据表单，可以访问表单的属性
+--------
+如上所示：
+若是form的属性中不存在user，就会出现Error: invalid username/password
+你可以获得一个标注的keyerror 若是你不这么做，将会出现: HTTP 404 bad request
+------
+可以使用arg属性来访问URL参数：
+    建议访问URL参数通过 get 或者 获取KeyError
+    因为用户会对URL更改和提交，此时出现 http 400 bad request 是不友好的体验
+    
 '''
