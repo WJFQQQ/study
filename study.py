@@ -63,3 +63,25 @@ GET :浏览器将当前页面的信息储存并发送给服务端
 POST:浏览器告诉服务端，它要向URL发送最新的信息。
      服务端(server)必须确认该信息已经储存，并只储存一次
 '''
+
+from flask import render_template
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.htmnl',name=name)
+'''
+Flask会在Templates文件夹中寻找hello.py
+Template必须和应用模块在同一个目录下：
+
+case1:
+/application.py
+/templates
+    /hello.html
+
+case2:
+/application
+    /__init__.py
+    /templates
+        /hello.html
+
+'''
