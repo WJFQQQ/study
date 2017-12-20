@@ -147,3 +147,30 @@ def page_not_found(error):
 '''
 注意访问render_template后面的404，将会提示FLASK ：404
 '''
+
+from flask import Flask,session,redirect,url_for,escape,request
+app=Flask(__name__)
+@app.route('/')
+def index():
+    if 'username' in session:
+        return 'log in as %s'%escape(session['username'])
+    return 'You are not logged in'
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method=='POST':
+        session['uername']=request.form['username']
+        return redirect(url_for('index'))
+    return
+
+@app.route('/logout')
+def logout():
+    #移除username
+    session.pop('username',None)
+    return redirect(url_for('index'))
+#cookies为储存在用户本地终端上的数据
+#session称为“会话控制”。Session 对象存储特定用户会话所需的属性及配置信息
+'''
+除了request对象，还有它的下一个session对象。使得你储存用户信息
+cookies将会在其中加密
+这意味着用户可以查看cookies信息，但是不能修改。除非有密码
+'''
