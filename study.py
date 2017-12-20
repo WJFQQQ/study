@@ -125,6 +125,25 @@ def index():
 cookies已经在response对象中设置，
 '''
 
-
-
-
+#指导用户访问其他节点，使用redirect()函数
+#终止错误代码的请求，使用abort()函数
+from flask import abort,redirect,url_for
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+@app.route('/login')
+def login():
+    abort(401)
+    this_is_never_exrcuted()
+    #用户将会从index被指导到401页面
+    '''
+    默认情况下，黑色和白色的错误页面如针对各个错误代码。
+    如果你想自定义错误页，您可以使用errorhandler()装饰器：
+    '''
+from flask import render_template
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'),404
+'''
+注意访问render_template后面的404，将会提示FLASK ：404
+'''
