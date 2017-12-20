@@ -109,5 +109,22 @@ searchword= request.arg.get('key','')
 可以使用arg属性来访问URL参数：
     建议访问URL参数通过 get 或者 获取KeyError
     因为用户会对URL更改和提交，此时出现 http 400 bad request 是不友好的体验
-    
+
 '''
+
+from flask import request
+@app.route('/')
+def index():
+    username=request.cookies.get('username')
+    #使用cookies.get(key) 代替 cookies[key] 防止出现KeyError错误
+
+    resp=make_response(render_template())
+    resp.set_cookies('username','the username')
+    return resp
+'''
+cookies已经在response对象中设置，
+'''
+
+
+
+
